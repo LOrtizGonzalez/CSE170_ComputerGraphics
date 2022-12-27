@@ -405,12 +405,6 @@ float* returnSmoothValues(float R, float r, int n) {
 			d1 -= C2;
 			e1 -= C1;
 			f1 -= C2;
-			/*a1 = glm::normalize(a1);
-			b1 = glm::normalize(b1);
-			c1 = glm::normalize(c1);
-			d1 = glm::normalize(d1);
-			e1 = glm::normalize(e1);
-			f1 = glm::normalize(f1);*/
 			
 			glm::vec4 norm1 = glm::vec4(a1, 1.0);
 			glm::vec4 norm2 = glm::vec4(b1, 1.0);
@@ -453,96 +447,6 @@ float* returnSmoothValues(float R, float r, int n) {
 
 	return sample;
 }
-
-/*float* SmoothVecs(float R, float r, int n) {
-	std::vector<float> vec;
-	int count = 0;
-
-	for (int i = 0; i < n; ++i) {
-		for (int j = 0; j < n; ++j) {
-			glm::vec3 a1((R + r * cos(prmtr(j, n))) * cos(prmtr(i, n)),
-				(R + r * cos(prmtr(j, n))) * sin(prmtr(i, n)),
-				r * sin(prmtr(j, n)));
-
-			glm::vec3 b1((R + r * cos(prmtr(j, n))) * cos(prmtr(i + 1, n)),
-				(R + r * cos(prmtr(j, n))) * sin(prmtr(i + 1, n)),
-				r * sin(prmtr(j, n)));
-
-			glm::vec3 c1((R + r * cos(prmtr(j + 1, n))) * cos(prmtr(i, n)),
-				(R + r * cos(prmtr(j + 1, n))) * sin(prmtr(i, n)),
-				r * sin(prmtr(j + 1, n)));
-			//SECOND TRIANGLE 
-			glm::vec3 d1((R + r * cos(prmtr(j + 1, n))) * cos(prmtr(i + 1, n)),
-				(R + r * cos(prmtr(j + 1, n))) * sin(prmtr(i + 1, n)),
-				r * sin(prmtr(j + 1, n)));
-
-			glm::vec3 e1((R + r * cos(prmtr(j + 1, n))) * cos(prmtr(i, n)),
-				(R + r * cos(prmtr(j + 1, n))) * sin(prmtr(i, n)),
-				r * sin(prmtr(j + 1, n)));
-
-			glm::vec3 f1((R + r * cos(prmtr(j, n))) * cos(prmtr(i + 1, n)),
-				(R + r * cos(prmtr(j, n))) * sin(prmtr(i + 1, n)),
-				r * sin(prmtr(j, n)));
-
-
-			//First Triangle coordinates: x1, y1, z1, 1; x2, y2, z2, 1; x3, y3, z3, 1;
-			glm::vec3 a((cos(prmtr(j, n))) * cos(prmtr(i, n)),
-				(cos(prmtr(j, n))) * sin(prmtr(i, n)), //
-				sin(prmtr(j, n)));
-			//std::cout << a[0] << ", " << a[1] << ", " << a[2] << std::endl;
-			glm::vec3 b((cos(prmtr(j, n))) * cos(prmtr(i + 1, n)), //
-				(cos(prmtr(j, n))) * sin(prmtr(i + 1, n)),
-				sin(prmtr(j, n)));
-
-			glm::vec3 c((cos(prmtr(j + 1, n))) * cos(prmtr(i, n)),
-				(cos(prmtr(j + 1, n))) * sin(prmtr(i, n)),
-				sin(prmtr(j + 1, n)));
-
-			//SECOND TRIANGLE 
-			glm::vec3 d((cos(prmtr(j + 1, n))) * cos(prmtr(i + 1, n)),
-				(cos(prmtr(j + 1, n))) * sin(prmtr(i + 1, n)),
-				sin(prmtr(j + 1, n)));
-
-			glm::vec3 e((cos(prmtr(j + 1, n))) * cos(prmtr(i, n)),
-				(cos(prmtr(j + 1, n))) * sin(prmtr(i, n)),
-				sin(prmtr(j + 1, n)));
-
-			glm::vec3 f((cos(prmtr(j, n))) * cos(prmtr(i + 1, n)),
-				(cos(prmtr(j, n))) * sin(prmtr(i + 1, n)),
-				sin(prmtr(j, n)));
-
-			//glm::vec3 C(R * cos(prmtr(i,n)), R * sin(prmtr(i,n)), 0);
-			//glm::vec3 C(R + r * (cos(j) - 1), -r, r * (sin(j) - 1));
-			
-			//v-c
-			//glm::vec3 vc(cos(prmtr(j, n))*sin(prmtr(i,n)),cos(prmtr(j,n))*sin(prmtr(i,n)),sin(prmtr(j,n)) );
-			vec.push_back(a[0]); vec.push_back(a[1]); vec.push_back(a[2]); vec.push_back(1);
-			vec.push_back(a1[0]); vec.push_back(a1[1]); vec.push_back(a1[2]); vec.push_back(1);
-
-			vec.push_back(b[0]); vec.push_back(b[1]); vec.push_back(b[2]); vec.push_back(1);
-			vec.push_back(b1[0]); vec.push_back(b1[1]); vec.push_back(b1[2]); vec.push_back(1);
-
-			vec.push_back(c[0]); vec.push_back(c[1]); vec.push_back(c[2]); vec.push_back(1);
-			vec.push_back(c1[0]); vec.push_back(c1[1]); vec.push_back(c1[2]); vec.push_back(1);
-
-			vec.push_back(d[0]); vec.push_back(d[1]); vec.push_back(d[2]); vec.push_back(1);
-			vec.push_back(d1[0]); vec.push_back(d1[1]); vec.push_back(d1[2]); vec.push_back(1);
-
-			vec.push_back(e[0]); vec.push_back(e[1]); vec.push_back(e[2]); vec.push_back(1);
-			vec.push_back(e1[0]); vec.push_back(e1[1]); vec.push_back(e1[2]); vec.push_back(1);
-
-			vec.push_back(f[0]); vec.push_back(f[1]); vec.push_back(f[2]); vec.push_back(1);
-			vec.push_back(f1[0]); vec.push_back(f1[1]); vec.push_back(f1[2]); vec.push_back(1);
-
-			count += 48;
-		}
-	}
-	float* sample = new float[count];
-	for (int i = 0; i < count; i++) {
-		sample[i] = -1*vec[i];
-	}
-	return sample;
-}*/
 
 //---------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx--------- +
 
